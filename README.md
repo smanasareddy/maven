@@ -1,22 +1,42 @@
-Employee Database
-=====================
+# .NET Sample App
 
-**A sample Employee Database CRUD application with Node.js, Express and MongoDB.**
+Push the app with no-start:
+```
+cf push environment -s windows2012R2 -b hwc_buildpack --no-start -p ./ViewEnvironment/
+```
 
-## Requirements
+If Diego is enabled by default on your CF deployment, you can omit the `--no-start` flag.
 
-* Node
-* Express
-* MongoDB
+If it's not, or if you're not sure, you'll need to install the [Diego Enabler](https://github.com/cloudfoundry-incubator/diego-enabler) CLI plugin:
+```
+cf add-plugin-repo CF-Community http://plugins.cloudfoundry.org/
+cf install-plugin Diego-Enabler -r CF-Community
+```
 
-## Implementation Instructions
+Enable diego and start your app:
+```
+cf enable-diego environment
+cf start environment
+```
 
-* [A Sample App with Node.js, Express and MongoDB – Part 1](http://blog.ijasoneverett.com/2013/03/a-sample-app-with-node-js-express-and-mongodb-part-1/)
-* [A Sample App with Node.js, Express and MongoDB – Part 2](http://blog.ijasoneverett.com/2013/04/a-sample-app-with-node-js-express-and-mongodb-part-2/)
+If you're having this problem pushing the application:
+```
+FAILED
+Server error, status code: 400, error code: 210003, message: The host is taken: environment
+```
+try adding ```--random-route``` to the ```cf push``` command:
+```
+cf push environment -s windows2012R2 -b hwc_buildpack --no-start -p ./ViewEnvironment/ --random-route
+```
+to avoid the host names clashing.
 
-## Contact
+Once your app is pushed, you can navigate to the app's URL and you will
+see all the VCAP variables.  Add ?all= to get all the system variables
+too.
 
-Jason Everett
+After your first push, you can simply push your updates without any additional command line arguments:
 
-- https://github.com/ijason
-- http://twitter.com/ijayson66
+```
+cf push environment
+```
+"# dot-net" 
