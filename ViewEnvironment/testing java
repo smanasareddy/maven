@@ -1,0 +1,11 @@
+pipeline {
+  agent {label 'slave1'}
+  stages	{
+    stage('SCM operation'){
+      steps{
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url:'https://github.com/smanasareddy/maven.git']]])
+        bat 'mvn clean install '
+      }
+	  }
+  }
+}
